@@ -1,9 +1,13 @@
 const MockXPublisher = require("./MockXPublisher");
 const MockInstagramPublisher = require("./MockInstagramPublisher");
+const DiscordPublisher = require("./DiscordPublisher");
+const TelegramPublisher = require("./TelegramPublisher");
 
 const ADAPTERS = {
     mock_x: new MockXPublisher(),
     mock_instagram: new MockInstagramPublisher(),
+    discord: new DiscordPublisher(),
+    telegram: new TelegramPublisher(),
 };
 
 function getAdapterForPlatform(platform) {
