@@ -1,0 +1,24 @@
+{
+  "name": "social_media_studio",
+  "version": "1.0.0",
+  "description": "FlyRank Backend Track Capstone. Turns one blog post into a reviewed, scheduled, idempotently\r published multi-platform social campaign.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/davidyassa/Social_Media_Studio.git"
+  },
+  "keywords": [],
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/davidyassa/Social_Media_Studio/issues"
+  },
+  "homepage": "https://github.com/davidyassa/Social_Media_Studio#readme",
+  "dependencies": {
+    "better-sqlite3": "^13.0.3",
+    "dotenv": "^17.4.2",
+    "express": "^5.2.1"
+  }
+}
