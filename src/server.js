@@ -1,10 +1,11 @@
 require("dotenv").config();
 const express = require("express");
 const cors = require("cors");
-const db = require("./db");
-const postRoutes = require("./routes/postRoutes");
-const variantRoutes = require("./routes/variantRoutes");
-const reviewRoutes = require("./routes/reviewRoutes");
+const db = require("./db"),
+    postRoutes = require("./routes/postRoutes"),
+    variantRoutes = require("./routes/variantRoutes"),
+    reviewRoutes = require("./routes/reviewRoutes"),
+    publishRoutes = require("./routes/publishRoutes");
 
 const app = express();
 app.use(
@@ -15,6 +16,7 @@ app.use(
     postRoutes,
     variantRoutes,
     reviewRoutes,
+    publishRoutes,
 );
 
 app.get("/", (req, res) => {
