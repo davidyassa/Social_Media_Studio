@@ -16,4 +16,20 @@ function findVariantsByPostId(postId) {
     return db.prepare("SELECT * FROM variants WHERE post_id = ?").all(postId);
 }
 
-module.exports = { createVariant, findVariantById, findVariantsByPostId };
+function updateStatus(id, status) {
+    db.prepare("UPDATE variants SET status = ? WHERE id = ?").run(status, id);
+    return findVariantById(id);
+}
+
+function updateContent(id, content) {
+    db.prepare("UPDATE variants SET content = ? WHERE id = ?").run(content, id);
+    return findVariantById(id);
+}
+
+module.exports = {
+    createVariant,
+    findVariantById,
+    findVariantsByPostId,
+    updateStatus,
+    updateContent,
+};

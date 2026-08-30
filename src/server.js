@@ -4,12 +4,18 @@ const cors = require("cors");
 const db = require("./db");
 const postRoutes = require("./routes/postRoutes");
 const variantRoutes = require("./routes/variantRoutes");
+const reviewRoutes = require("./routes/reviewRoutes");
 
 const app = express();
-app.use(express.json());
-app.use(cors());
-app.use(postRoutes);
-app.use(variantRoutes);
+app.use(
+    express.json(),
+    cors(),
+);
+app.use(
+    postRoutes,
+    variantRoutes,
+    reviewRoutes,
+);
 
 app.get("/", (req, res) => {
     return res.json({
