@@ -12,4 +12,8 @@ function findSlotById(id) {
     return db.prepare("SELECT * FROM slots WHERE id = ?").get(id);
 }
 
-module.exports = { createSlot, findSlotById };
+function findSlotsByVariantId(variantId) {
+    return db.prepare("SELECT * FROM slots WHERE variant_id = ?").all(variantId);
+}
+
+module.exports = { createSlot, findSlotById, findSlotsByVariantId };
