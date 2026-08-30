@@ -1,5 +1,6 @@
 const variantRepository = require("../repositories/variantRepository");
 const slotRepository = require("../repositories/slotRepository");
+const jobRepository = require("../repositories/jobRepository");
 const { validateVariant } = require("./constraintValidator");
 
 function getVariantOrThrow(id) {
@@ -41,7 +42,9 @@ function scheduleVariant(id, scheduledAt) {
         error.statusCode = 400;
         throw error;
     }
-    return slotRepository.createSlot(id, scheduledAt);
+    const slot = slotRepository.createSlot(id, scheduledAt);
+    jobRepository.createJob(slot.id);
+    return slot;
 }
 
 module.exports = { approveVariant, rejectVariant, editVariant, scheduleVariant };

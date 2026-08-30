@@ -4,7 +4,8 @@
   "description": "FlyRank Backend Track Capstone. Turns one blog post into a reviewed, scheduled, idempotently\r published multi-platform social campaign.",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node src/server.js",
+    "worker": "node src/worker.js"
   },
   "repository": {
     "type": "git",
