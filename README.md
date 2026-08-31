@@ -8,6 +8,7 @@ published multi-platform social campaign.
 1. **Ingest** a blog post as a URL or pasted Markdown — stored once as the single source of truth.
 2. **Generate** platform-specific variants (X, Instagram, Discord, Telegram), each with
    keyword-extracted hashtags and validated against that platform's constraint profile
+<<<<<<< HEAD
    (length, hashtag count) before it's ever stored. A variant that breaks a rule never becomes
    a row.
 3. **Review**: every variant is `draft` until a human approves, edits, or rejects it. An
@@ -56,11 +57,48 @@ published multi-platform social campaign.
         v
    publish_attempts: idempotency_key UNIQUE — one slot = one post, always
 ```
+=======
+   (length, hashtag count) before it's ever stored.
+3. **Review**: every variant is `draft` until a human approves, edits, or rejects it. An
+   unapproved variant cannot be scheduled.
+4. **Schedule**: an approved variant gets a time slot and a job row.
+5. **Publish**: a separate worker process polls for due jobs and publishes them through a
+   `SocialPublisher` adapter — Discord and Telegram are real targets; X and Instagram are
+   mock adapters that record what they'd post. Publishing is idempotent (a retried or
+   re-run publish call never posts twice) and the worker survives a mid-batch crash
+   without duplicating anything.
+
+## Architecture
+[blog post: URL or markdown]
+|
+v
+ingest + store ---> variant generator ---> constraint validation
+| |
+v v
+review workflow: draft -> approved | rejected
+|
+v
+scheduler (jobs table, polled by a separate worker process)
+|
+v
+SocialPublisher interface
++-- DiscordPublisher (real — webhook POST)
++-- TelegramPublisher (real — Bot API sendMessage)
++-- MockXPublisher
++-- MockInstagramPublisher
+|
+v
+publish_attempts: one slot = one post, always (idempotency_key UNIQUE)
+>>>>>>> 56ce98cd8f17e4a173de4a329cec158bbbc878c8
 
 ## Platforms
 
 | Platform  | Type | Adapter                                |
+<<<<<<< HEAD
 | --------- | ---- | --------------------------------------- |
+=======
+| --------- | ---- | -------------------------------------- |
+>>>>>>> 56ce98cd8f17e4a173de4a329cec158bbbc878c8
 | Discord   | Real | Webhook `POST`                         |
 | Telegram  | Real | Bot API `sendMessage`                  |
 | X         | Mock | Writes to `publish_attempts` + preview |
