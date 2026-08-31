@@ -39,6 +39,18 @@ function markFailed(id) {
     db.prepare("UPDATE jobs SET status = 'failed' WHERE id = ?").run(id);
 }
 
+function reclaimStaleClaimedJobs() {
+    // A job left 'claimed' at startup was claimed by a previous run that never
+    // reached markDone/markFailed (killed, crashed, etc). With a single worker
+    // process, nothing else could be legitimately mid-publish on it right now —
+    // reset it to 'pending' so this run's first poll cycle picks it back up.
+    const stmt = db.prepare(
+        `UPDATE jobs SET status = 'pending', claimed_at = NULL WHERE status = 'claimed'`
+    );
+    const info = stmt.run();
+    return info.changes;
+}
+
 module.exports = {
     createJob,
     findJobById,
@@ -46,4 +58,5 @@ module.exports = {
     claimJob,
     markDone,
     markFailed,
+    reclaimStaleClaimedJobs,
 };
